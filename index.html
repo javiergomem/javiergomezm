@@ -466,7 +466,7 @@ tr.row-alerta{background:#ffe8e8;border-left:3px solid var(--rojo);}
     <button class="nav-btn" id="nav_asistencia" onclick="irPanel('asistencia')"><span class="nav-icon">📋</span> Asistencia</button>
     <button class="nav-btn" id="nav_justificaciones" onclick="irPanel('justificaciones')"><span class="nav-icon">📄</span> Justificaciones <span id="navAlertaBadge" style="display:none;background:var(--rojo);color:white;border-radius:99px;padding:1px 7px;font-size:10px;margin-left:4px;">!</span></button>
     <button class="nav-btn" id="nav_reportes" onclick="irPanel('reportes')"><span class="nav-icon">📊</span> Reportes</button>
-    <button class="nav-btn" id="nav_envivo" onclick="irPanel('envivo')"><span class="nav-icon">📡</span> En Vivo <span id="enVivoBadge" style="display:none;background:#2ecc71;color:white;border-radius:99px;padding:1px 7px;font-size:10px;margin-left:4px;">●</span></button>
+
     <button class="nav-btn" id="nav_refuerzo" onclick="irPanel('refuerzo')" style="display:none;"><span class="nav-icon">📌</span> Refuerzo</button>
     <button class="nav-btn" id="nav_incidencias" onclick="irPanel('incidencias')" style="display:none;"><span class="nav-icon">📓</span> Incidencias</button>
     <button class="nav-btn" id="nav_permisos" onclick="irPanel('permisos')" style="display:none;"><span class="nav-icon">🚶</span> Permisos</button>
@@ -551,6 +551,16 @@ tr.row-alerta{background:#ffe8e8;border-left:3px solid var(--rojo);}
             <div class="form-group"><label>Sección *</label>
               <select id="sSeccion"><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
             </div>
+            <div class="form-group full"><label>Categoría</label>
+              <select id="sCategoria">
+                <option value="">— Sin categoría —</option>
+                <option value="Nivel Básico">Nivel Básico</option>
+                <option value="Nivel Intermedio">Nivel Intermedio</option>
+                <option value="Nivel Avanzado 1">Nivel Avanzado 1</option>
+                <option value="Nivel Avanzado 2">Nivel Avanzado 2</option>
+                <option value="Nivel Competitivo">Nivel Competitivo</option>
+              </select>
+            </div>
           </div>
           <div class="form-group" style="margin-top:8px;"><label>DNI del Apoderado *</label><input type="text" id="sDNI" placeholder="DNI u 8 dígitos o carnet" maxlength="12"></div>
           <div class="form-group" style="margin-top:8px;"><label>WhatsApp apoderado</label><input type="text" id="sTelefono" placeholder="51987654321"></div>
@@ -584,11 +594,23 @@ tr.row-alerta{background:#ffe8e8;border-left:3px solid var(--rojo);}
                 </select>
               </div>
             </div>
+            <div style="margin-bottom:12px;">
+              <div style="font-size:11px;font-weight:600;color:var(--texto-suave);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">Categoría</div>
+              <select id="importCategoria" style="width:100%;padding:8px 10px;border:1.5px solid var(--borde);border-radius:8px;font-size:13px;font-family:inherit;background:var(--fondo);color:var(--texto);">
+                <option value="">— Sin categoría —</option>
+                <option value="Nivel Básico">Nivel Básico</option>
+                <option value="Nivel Intermedio">Nivel Intermedio</option>
+                <option value="Nivel Avanzado 1">Nivel Avanzado 1</option>
+                <option value="Nivel Avanzado 2">Nivel Avanzado 2</option>
+                <option value="Nivel Competitivo">Nivel Competitivo</option>
+              </select>
+            </div>
             <div style="background:#E3F2FD;border:1px solid #1565C020;border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:12px;color:#1565C0;line-height:1.6;">
               📋 <strong>Formato del Excel:</strong> El archivo debe tener estas 3 columnas en orden:<br>
               <strong>A: nombre</strong> — Apellidos y nombres completos<br>
               <strong>B: dniPadre</strong> — DNI del apoderado (8 dígitos)<br>
-              <strong>C: telefono</strong> — Número sin código de país (ej: 987654321)
+              <strong>C: telefono</strong> — Número sin código de país (ej: 987654321)<br>
+              La categoría se asignará según la selección de arriba.
             </div>
             <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
               <button onclick="importDescargarPlantilla()" style="padding:8px 14px;background:var(--fondo);border:1.5px solid var(--borde);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;color:var(--texto);">📄 Descargar plantilla</button>
@@ -601,9 +623,23 @@ tr.row-alerta{background:#ffe8e8;border-left:3px solid var(--rojo);}
             <div id="importProgreso" style="display:none;margin-top:10px;"></div>
           </div>
           <div class="filters">
-            <select id="fGradoAdmin" onchange="renderEstudiantes()"><option value="">Todos los grados</option><option value="1ro">1ro</option><option value="2do">2do</option><option value="3ro">3ro</option><option value="4to">4to</option><option value="5to">5to</option></select>
-            <select id="fSecAdmin" onchange="renderEstudiantes()"><option value="">Todas las secciones</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
-          </div>
+            <select id="fGradoAdmin" onchange="renderEstudiantes()">
+              <option value="">Todos los grados</option>
+              <option value="1ro">1ro</option><option value="2do">2do</option><option value="3ro">3ro</option><option value="4to">4to</option><option value="5to">5to</option>
+            </select>
+            <select id="fSecAdmin" onchange="renderEstudiantes()">
+              <option value="">Todas las secciones</option>
+              <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option>
+            </select>
+            <select id="fCategoriaAdmin" onchange="renderEstudiantes()">
+              <option value="">Todas las categorías</option>
+              <option value="Nivel Básico">Nivel Básico</option>
+              <option value="Nivel Intermedio">Nivel Intermedio</option>
+              <option value="Nivel Avanzado 1">Nivel Avanzado 1</option>
+              <option value="Nivel Avanzado 2">Nivel Avanzado 2</option>
+              <option value="Nivel Competitivo">Nivel Competitivo</option>
+            </select>
+            <input type="hidden" id="fCategoriaAdmin_old" value="">
           <div id="listaEstudiantes" class="students-grid"></div>
         </div>
       </div>
@@ -1015,7 +1051,7 @@ tr.row-alerta{background:#ffe8e8;border-left:3px solid var(--rojo);}
   <button class="mobile-nav-btn" id="mn_incidencias" onclick="irPanel('incidencias')"><span>📓</span>Incidencias</button>
   <button class="mobile-nav-btn" id="mn_justificaciones" onclick="irPanel('justificaciones')"><span>📄</span>Justif.</button>
   <button class="mobile-nav-btn" id="mn_reportes" onclick="irPanel('reportes')"><span>📊</span>Reportes</button>
-  <button class="mobile-nav-btn" id="mn_envivo" onclick="irPanel('envivo')"><span>📡</span>En Vivo</button>
+
   <button class="mobile-nav-btn" id="mn_refuerzo" onclick="irPanel('refuerzo')"><span>📌</span>Refuerzo</button>
   <button class="mobile-nav-btn" id="mn_padre" onclick="irPanel('padre')"><span>👪</span>Mi Hijo</button>
 </nav>
@@ -1247,6 +1283,17 @@ tr.row-alerta{background:#ffe8e8;border-left:3px solid var(--rojo);}
         </div>
       </div>
       <div>
+        <label style="font-size:11px;font-weight:600;color:var(--texto-suave);display:block;margin-bottom:4px;">CATEGORÍA</label>
+        <select class="input" id="editEstCategoria" style="width:100%;">
+          <option value="">— Sin categoría —</option>
+          <option value="Nivel Básico">Nivel Básico</option>
+          <option value="Nivel Intermedio">Nivel Intermedio</option>
+          <option value="Nivel Avanzado 1">Nivel Avanzado 1</option>
+          <option value="Nivel Avanzado 2">Nivel Avanzado 2</option>
+          <option value="Nivel Competitivo">Nivel Competitivo</option>
+        </select>
+      </div>
+      <div>
         <label style="font-size:11px;font-weight:600;color:var(--texto-suave);display:block;margin-bottom:4px;">DNI DEL APODERADO</label>
         <input class="input" id="editEstDNI" type="text" maxlength="8" placeholder="8 dígitos">
       </div>
@@ -1443,22 +1490,16 @@ async function hacerLoginPadre() {
   const btn = document.getElementById('loginBtn');
   btn.disabled = true; btn.textContent = '⏳ Verificando…';
   try {
-    // Obtener custom token desde la Cloud Function
-    const resp = await fetch('https://loginpadre-gv5rqbin3a-uc.a.run.app', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ dni })
-    });
-    const data = await resp.json();
-    if (!resp.ok) {
-      err.textContent = '❌ ' + (data.error || 'DNI no encontrado');
+    // Login anónimo para poder leer Firestore (reglas requieren auth != null)
+    if (!FB.auth.currentUser) await FB.signInAnonymously(FB.auth);
+    // Buscar hijos directamente en Firestore por dniPadre (sin Cloud Function)
+    const hijos = await fsQuery('estudiantes', FB.where('dniPadre','==',dni));
+    if (!hijos.length) {
+      err.textContent = '❌ DNI no encontrado. Verifica o contacta al administrador.';
       err.style.display = 'block';
       btn.disabled = false; btn.textContent = '🔐 Ingresar';
       return;
     }
-    // Autenticar con custom token (seguro — solo ve datos de sus hijos)
-    await FB.signInWithCustomToken(FB.auth, data.token);
-    const hijos = await fsQuery('estudiantes', FB.where('dniPadre','==',dni));
     sesion = { uid:'padre_'+dni, nombre:'Apoderado', rol:'padre', grados:[], secciones:[], dni };
     entrarApp();
     irPanel('padre');
@@ -1467,7 +1508,6 @@ async function hacerLoginPadre() {
     document.getElementById('padreApodInfo').innerHTML = '<strong>👪 DNI ' + dni + '</strong> — ' + hijos.length + ' hijo(s) registrado(s)';
     await renderHijosInfo(hijos);
   } catch(e) {
-    try { await FB.signOut(FB.auth); } catch(_) {}
     err.textContent = '❌ Error: ' + e.message;
     err.style.display = 'block';
     btn.disabled = false; btn.textContent = '🔐 Ingresar';
@@ -1658,12 +1698,13 @@ async function agregarEstudiante() {
   const nombre = document.getElementById('sNombre').value.trim();
   const grado = document.getElementById('sGrado').value;
   const seccion = document.getElementById('sSeccion').value;
+  const categoria = document.getElementById('sCategoria').value;
   const dniPadre = document.getElementById('sDNI').value.trim();
   const telefono = document.getElementById('sTelefono').value.trim();
   if (!nombre || !dniPadre) { notif('❌ Nombre y DNI son obligatorios','error'); return; }
   if (!/^(\d{8}|[A-Za-z0-9]{9,12})$/.test(dniPadre)) { notif('❌ DNI o carnet de extranjería inválido','error'); return; }
   try {
-    await fsAdd('estudiantes',{ nombre, grado, seccion, dniPadre, telefono });
+    await fsAdd('estudiantes',{ nombre, grado, seccion, categoria, dniPadre, telefono });
     notif('✅ Estudiante registrado en Firebase','success');
     document.getElementById('sNombre').value='';
     document.getElementById('sDNI').value='';
@@ -1696,8 +1737,10 @@ async function renderEstudiantes() {
   if (!_estudiantesCache.length) _estudiantesCache = lista;
   const gf = document.getElementById('fGradoAdmin')?.value;
   const sf = document.getElementById('fSecAdmin')?.value;
+  const cf = document.getElementById('fCategoriaAdmin')?.value;
   if (gf) lista = lista.filter(e=>e.grado===gf);
   if (sf) lista = lista.filter(e=>e.seccion===sf);
+  if (cf) lista = lista.filter(e=>e.categoria===cf);
   const fecha = getFecha();
   const asist = _asistenciaHoyCache?.length ? _asistenciaHoyCache : await fsQuery('asistencia', FB.where('fecha','==',fecha));
   if (!_asistenciaHoyCache?.length) _asistenciaHoyCache = asist;
@@ -1707,6 +1750,7 @@ async function renderEstudiantes() {
     <div class="student-card ${presSet.has(e.id)?'presente':''}">
       <div class="student-name">${e.nombre}</div>
       <div class="student-grade">${e.grado} — Sección ${e.seccion}</div>
+      ${e.categoria ? `<div style="font-size:11px;color:var(--texto-suave);margin-top:2px;">🏅 ${e.categoria}</div>` : ''}
       <div class="qr-container" id="qr_${e.id}" data-qrid="${e.id}"></div>
       <small style="color:var(--texto-suave);font-size:10px;">DNI apod: ${e.dniPadre}</small>
       <div style="margin-top:7px;display:flex;gap:4px;justify-content:center;flex-wrap:wrap;">
@@ -1748,6 +1792,7 @@ async function abrirEditarEstudiante(id) {
   document.getElementById('editEstNombre').value = e.nombre || '';
   document.getElementById('editEstGrado').value = e.grado || '1°';
   document.getElementById('editEstSeccion').value = e.seccion || 'A';
+  document.getElementById('editEstCategoria').value = e.categoria || '';
   document.getElementById('editEstDNI').value = e.dniPadre || '';
   document.getElementById('editEstTelefono').value = e.telefono || '';
   document.getElementById('modalEditarEst').classList.add('open');
@@ -1758,12 +1803,13 @@ async function guardarEdicionEstudiante() {
   const nombre = document.getElementById('editEstNombre').value.trim();
   const grado = document.getElementById('editEstGrado').value;
   const seccion = document.getElementById('editEstSeccion').value;
+  const categoria = document.getElementById('editEstCategoria').value;
   const dniPadre = document.getElementById('editEstDNI').value.trim();
   const telefono = document.getElementById('editEstTelefono').value.trim();
   if (!nombre || !dniPadre) { notif('❌ Nombre y DNI son obligatorios','error'); return; }
   if (!/^(\d{8}|[A-Za-z0-9]{9,12})$/.test(dniPadre)) { notif('❌ DNI o carnet de extranjería inválido','error'); return; }
   try {
-    await fsUpdate('estudiantes', id, { nombre, grado, seccion, dniPadre, telefono });
+    await fsUpdate('estudiantes', id, { nombre, grado, seccion, categoria, dniPadre, telefono });
     document.getElementById('modalEditarEst').classList.remove('open');
     notif('✅ Estudiante actualizado correctamente','success');
     renderEstudiantes(); actualizarStats();
@@ -1813,10 +1859,9 @@ async function descargarQR(id) {
   ctx.restore();
   // Textos del header
   ctx.fillStyle='#ffffff'; ctx.font='bold 15px Arial'; ctx.textAlign='center';
-  ctx.fillText('IE N.° 0148', W/2, 92);
+  ctx.fillText('C.D. Matadorcita J.A.V.I.', W/2, 92);
   ctx.font='bold 11px Arial';
-  ctx.fillText('MAESTRO VÍCTOR RAÚL HAYA', W/2, 111);
-  ctx.fillText('DE LA TORRE', W/2, 125);
+  ctx.fillText('IEE Josefina M. de Bocanegra — Nasca', W/2, 111);
   // Badge "Tarjeta de Asistencia"
   ctx.fillStyle='rgba(255,255,255,0.18)';
   ctx.beginPath(); ctx.roundRect(W/2-60, 142, 120, 22, 11); ctx.fill();
@@ -1905,8 +1950,8 @@ async function imprimirQR() {
     return `<div class="tarjeta">
       <div class="hdr">
         <img class="logo" src="${LOGO_B64}" alt="Escudo">
-        <div class="colegio">IE N.° 0148</div>
-        <div class="colegio2">MAESTRO VÍCTOR RAÚL HAYA<br>DE LA TORRE</div>
+        <div class="colegio">C.D. Matadorcita J.A.V.I.</div>
+        <div class="colegio2">IEE Josefina M. de Bocanegra — Nasca</div>
         <div class="sub">TARJETA DE ASISTENCIA</div>
       </div>
       <div class="qr-wrap"><img src="${qrSrc}" width="130" height="130"></div>
@@ -2086,7 +2131,7 @@ async function cargarTablaAsistencia() {
     const btnJustif=(est==='ausente'||est==='tardanza')&&['admin','tutor'].includes(sesion?.rol)?`<button class="btn btn-ghost btn-sm" style="margin-left:6px;font-size:10px;" onclick="abrirLlegadaJustif('${a.estudianteId}','${(a.nombre||'').replace(/'/g,"\\'")}')">📄 Justif.</button>`:'';
     const btnEliminar=sesion?.rol==='admin'?`<button class="btn btn-danger btn-sm" style="margin-left:6px;font-size:10px;" onclick="eliminarRegistroHoy('${a.id}','${(a.nombre||'').replace(/'/g,"\\'")}')">🗑</button>`:'';
     const tel=(_estudiantesCache.find(e=>e.id===a.estudianteId)||{}).telefono||'';
-    const msgWA=encodeURIComponent('⚠️ Estimado apoderado, su hijo/a '+(a.nombre||'')+' ('+(a.grado||'')+' "'+(a.seccion||'')+'") NO tiene registro de ingreso hoy '+(a.fecha||getFecha())+' — IE N.° 0148 Maestro Víctor Raúl Haya de la Torre.');
+    const msgWA=encodeURIComponent('⚠️ Estimado apoderado, su hijo/a '+(a.nombre||'')+' ('+(a.grado||'')+' "'+(a.seccion||'')+'") NO tiene registro de ingreso hoy '+(a.fecha||getFecha())+' — C.D. Matadorcita J.A.V.I. / IEE Josefina M. de Bocanegra.');
     const btnWA=est==='ausente'&&tel&&['admin','tutor'].includes(sesion?.rol)?`<a href="https://wa.me/${tel}?text=${msgWA}" target="_blank" class="btn btn-ghost btn-sm" style="margin-left:6px;font-size:10px;background:#25D366;color:white;border:none;">📲 WA</a>`:'';
     return `<tr class="${rowCls}"><td>${a.nombre||a.estudianteId}</td><td>${a.grado||'—'}</td><td>${a.seccion||'—'}</td><td>${a.hora}</td><td>${badge}${btnJustif}${btnWA}${btnEliminar}</td></tr>`;
   }).join('');
@@ -2431,7 +2476,7 @@ async function renderHijosInfo(hijos) {
     </div>`;
     // — Tarjeta compartible —
     const nivelLogro=asist2===5&&tard2===0?'🏆 ¡Semana perfecta!':asist2>=4?'🥇 ¡Casi perfecta!':asist2>=3?'🥈 ¡Buena semana!':'';
-    const msgCompartir=nivelLogro?encodeURIComponent(`${nivelLogro}\n\n🌟 Mi hijo/a ${h.nombre} asistió ${asist2} de 5 días esta semana${tard2===0?' sin ninguna tardanza':''} 💪\n\n¡Orgulloso/a de su dedicación y responsabilidad!\n\n🏫 IE N.° 0148 Maestro Víctor Raúl Haya de la Torre`):'';
+    const msgCompartir=nivelLogro?encodeURIComponent(`${nivelLogro}\n\n🌟 Mi hijo/a ${h.nombre} asistió ${asist2} de 5 días esta semana${tard2===0?' sin ninguna tardanza':''} 💪\n\n¡Orgulloso/a de su dedicación y responsabilidad!\n\n🏫 C.D. Matadorcita J.A.V.I. / IEE Josefina M. de Bocanegra`):'';
     const compartirHtml=nivelLogro?`<div style="margin-bottom:12px;background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:14px;padding:12px 14px;text-align:center;">
       <div style="font-size:16px;margin-bottom:4px;">${nivelLogro}</div>
       <div style="font-size:11px;color:rgba(255,255,255,.6);margin-bottom:10px;">${h.nombre} lo logró esta semana</div>
@@ -2695,7 +2740,7 @@ async function cambiarEstadoJustif(id, estado) {
 
 function generarBoletaJustificacion(j,fmtFecha,fmtHora,ahora,vence) {
   const motLabels={enfermedad:'🤒 Enfermedad',cita:'🏥 Cita médica',familiar:'👨‍👩‍👧 Motivo familiar',otro:'📝 Otro motivo',alerta:'🚨 Alerta'};
-  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Boleta de Justificación</title><style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(135deg,#f5f5f5 0%,#ede8e8 100%);display:flex;justify-content:center;align-items:flex-start;min-height:100vh;padding:24px;}.boleta{background:white;width:400px;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(146,43,33,.18);}.header{background:linear-gradient(135deg,#7b1f18 0%,#e8000d 100%);color:white;padding:20px 22px 16px;text-align:center;position:relative;}.logo-circle{width:56px;height:56px;background:rgba(255,255,255,.15);border:2.5px solid rgba(255,255,255,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:26px;}.school-name{font-size:11px;font-weight:700;line-height:1.5;letter-spacing:.3px;opacity:.95;}.school-sub{font-size:9px;opacity:.65;margin-top:3px;letter-spacing:.5px;text-transform:uppercase;}.sello{background:linear-gradient(90deg,#1a7a3a,#27ae60);color:white;text-align:center;padding:11px;font-size:13px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;justify-content:center;gap:7px;}.body{padding:20px 22px;}.section-title{font-size:8px;font-weight:800;color:#b00008;text-transform:uppercase;letter-spacing:1px;border-bottom:1.5px solid #ffd0d0;padding-bottom:5px;margin-bottom:12px;margin-top:16px;}.section-title:first-child{margin-top:0;}.field{margin-bottom:10px;display:flex;flex-direction:column;}.field label{font-size:8px;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;}.field value{font-size:13px;font-weight:600;color:#1a1a1a;}.field.row{flex-direction:row;gap:16px;}.field.row>div{flex:1;}.vence{background:linear-gradient(135deg,#ffe8e8,#ffd5d5);border:2px solid #e8000d;border-radius:10px;padding:14px;text-align:center;margin:16px 0;}.vence .v-lbl{font-size:8px;color:#b00008;font-weight:800;text-transform:uppercase;letter-spacing:.8px;}.vence .v-val{font-size:16px;font-weight:900;color:#b00008;margin-top:3px;}.horario{background:#fef9ec;border:1.5px solid #f39c12;border-radius:10px;padding:12px;text-align:center;margin-bottom:16px;}.horario .h-lbl{font-size:8px;font-weight:800;color:#784212;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;}.horario .h-dias{font-size:13px;font-weight:700;color:#784212;}.horario .h-hora{font-size:11px;color:#a04000;margin-top:2px;}.qr-area{border:1.5px dashed #ddd;border-radius:8px;padding:10px;text-align:center;margin-bottom:4px;color:#bbb;font-size:10px;}.footer{background:linear-gradient(135deg,#7b1f18,#b00008);color:rgba(255,255,255,.55);font-size:8px;text-align:center;padding:10px;letter-spacing:.3px;}</style></head><body><div class="boleta"><div class="header"><div class="logo-circle">🏫</div><div class="school-name">IE N.° 0148 — MAESTRO VÍCTOR RAÚL HAYA DE LA TORRE</div><div class="school-sub">Sistema de Control de Asistencia Estudiantil</div></div><div class="sello"><span>✅</span><span>JUSTIFICACIÓN APROBADA — VÁLIDA 48 HORAS</span></div><div class="body"><div class="section-title">📋 Datos del estudiante</div><div class="field"><label>Nombre completo</label><value>${j.nombre}</value></div><div class="field row"><div><div class="field"><label>Grado</label><value>${j.grado}</value></div></div><div><div class="field"><label>Sección</label><value>${j.seccion}</value></div></div></div><div class="section-title">📄 Detalle de la justificación</div><div class="field"><label>Fecha de inasistencia</label><value>${j.fecha}</value></div><div class="field"><label>Motivo</label><value>${motLabels[j.motivo]||j.motivo}</value></div><div class="field"><label>Aprobado por</label><value>${j.validadoPor||'Tutor del aula'}</value></div><div class="vence"><div class="v-lbl">⏰ Válido hasta</div><div class="v-val">${fmtFecha(vence)} — ${fmtHora(vence)}</div></div><div class="horario"><div class="h-lbl">📅 Horario de atención</div><div class="h-dias">Lunes, Miércoles y Viernes</div><div class="h-hora">9:00 a.m. — 11:00 a.m.</div></div></div><div class="footer">Sistema AsistenciaQR • Generado el ${fmtFecha(ahora)} a las ${fmtHora(ahora)}</div></div></body></html>`;
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Boleta de Justificación</title><style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(135deg,#f5f5f5 0%,#ede8e8 100%);display:flex;justify-content:center;align-items:flex-start;min-height:100vh;padding:24px;}.boleta{background:white;width:400px;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(146,43,33,.18);}.header{background:linear-gradient(135deg,#7b1f18 0%,#e8000d 100%);color:white;padding:20px 22px 16px;text-align:center;position:relative;}.logo-circle{width:56px;height:56px;background:rgba(255,255,255,.15);border:2.5px solid rgba(255,255,255,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:26px;}.school-name{font-size:11px;font-weight:700;line-height:1.5;letter-spacing:.3px;opacity:.95;}.school-sub{font-size:9px;opacity:.65;margin-top:3px;letter-spacing:.5px;text-transform:uppercase;}.sello{background:linear-gradient(90deg,#1a7a3a,#27ae60);color:white;text-align:center;padding:11px;font-size:13px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;justify-content:center;gap:7px;}.body{padding:20px 22px;}.section-title{font-size:8px;font-weight:800;color:#b00008;text-transform:uppercase;letter-spacing:1px;border-bottom:1.5px solid #ffd0d0;padding-bottom:5px;margin-bottom:12px;margin-top:16px;}.section-title:first-child{margin-top:0;}.field{margin-bottom:10px;display:flex;flex-direction:column;}.field label{font-size:8px;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;}.field value{font-size:13px;font-weight:600;color:#1a1a1a;}.field.row{flex-direction:row;gap:16px;}.field.row>div{flex:1;}.vence{background:linear-gradient(135deg,#ffe8e8,#ffd5d5);border:2px solid #e8000d;border-radius:10px;padding:14px;text-align:center;margin:16px 0;}.vence .v-lbl{font-size:8px;color:#b00008;font-weight:800;text-transform:uppercase;letter-spacing:.8px;}.vence .v-val{font-size:16px;font-weight:900;color:#b00008;margin-top:3px;}.horario{background:#fef9ec;border:1.5px solid #f39c12;border-radius:10px;padding:12px;text-align:center;margin-bottom:16px;}.horario .h-lbl{font-size:8px;font-weight:800;color:#784212;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;}.horario .h-dias{font-size:13px;font-weight:700;color:#784212;}.horario .h-hora{font-size:11px;color:#a04000;margin-top:2px;}.qr-area{border:1.5px dashed #ddd;border-radius:8px;padding:10px;text-align:center;margin-bottom:4px;color:#bbb;font-size:10px;}.footer{background:linear-gradient(135deg,#7b1f18,#b00008);color:rgba(255,255,255,.55);font-size:8px;text-align:center;padding:10px;letter-spacing:.3px;}</style></head><body><div class="boleta"><div class="header"><div class="logo-circle">🏫</div><div class="school-name">C.D. MATADORCITA J.A.V.I. — IEE JOSEFINA M. DE BOCANEGRA</div><div class="school-sub">Sistema de Control de Asistencia Estudiantil</div></div><div class="sello"><span>✅</span><span>JUSTIFICACIÓN APROBADA — VÁLIDA 48 HORAS</span></div><div class="body"><div class="section-title">📋 Datos del estudiante</div><div class="field"><label>Nombre completo</label><value>${j.nombre}</value></div><div class="field row"><div><div class="field"><label>Grado</label><value>${j.grado}</value></div></div><div><div class="field"><label>Sección</label><value>${j.seccion}</value></div></div></div><div class="section-title">📄 Detalle de la justificación</div><div class="field"><label>Fecha de inasistencia</label><value>${j.fecha}</value></div><div class="field"><label>Motivo</label><value>${motLabels[j.motivo]||j.motivo}</value></div><div class="field"><label>Aprobado por</label><value>${j.validadoPor||'Tutor del aula'}</value></div><div class="vence"><div class="v-lbl">⏰ Válido hasta</div><div class="v-val">${fmtFecha(vence)} — ${fmtHora(vence)}</div></div><div class="horario"><div class="h-lbl">📅 Horario de atención</div><div class="h-dias">Lunes, Miércoles y Viernes</div><div class="h-hora">9:00 a.m. — 11:00 a.m.</div></div></div><div class="footer">Sistema AsistenciaQR • Generado el ${fmtFecha(ahora)} a las ${fmtHora(ahora)}</div></div></body></html>`;
   const blob=new Blob([html],{type:'text/html'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
@@ -2980,7 +3025,7 @@ async function exportarExcel() {
   const grupos={};
   for(const e of estudiantes){const key=e.grado+'|'+e.seccion;if(!grupos[key]) grupos[key]={grado:e.grado,seccion:e.seccion,estudiantes:[]};grupos[key].estudiantes.push(e);}
   const claves=Object.keys(grupos).sort((a,b)=>{const [ga,sa]=a.split('|'),[gb,sb]=b.split('|');return (gradoOrden.indexOf(ga)-gradoOrden.indexOf(gb))||secOrden.indexOf(sa)-secOrden.indexOf(sb);});
-  let html=`<html><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;font-size:11px;margin:16px;}h1{font-size:15px;color:#b00008;}h3{font-size:13px;color:#b00008;margin:22px 0 6px;border-bottom:2px solid #e8000d;padding-bottom:4px;}table{border-collapse:collapse;margin-bottom:16px;font-size:10px;}th{background:#b00008;color:white;padding:6px 8px;text-align:center;white-space:nowrap;border:1px solid #900;}td{padding:5px 8px;border:1px solid #ddd;vertical-align:top;}td:nth-child(1){text-align:center;}td:nth-child(2){white-space:nowrap;min-width:160px;}.fc{text-align:center;min-width:64px;}.pres{color:#1a6b3a;font-weight:700;}.aus{color:#e8000d;font-weight:700;}.tard{color:#e67e22;font-weight:700;}.just{color:#1a5276;font-weight:700;}.justif-sub{font-size:9px;color:#555;margin-top:2px;}@media print{body{margin:6px;}}</style></head><body><h1>\u{1F4DA} IE N.° 0148 — Reporte de Asistencia</h1>`;
+  let html=`<html><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;font-size:11px;margin:16px;}h1{font-size:15px;color:#b00008;}h3{font-size:13px;color:#b00008;margin:22px 0 6px;border-bottom:2px solid #e8000d;padding-bottom:4px;}table{border-collapse:collapse;margin-bottom:16px;font-size:10px;}th{background:#b00008;color:white;padding:6px 8px;text-align:center;white-space:nowrap;border:1px solid #900;}td{padding:5px 8px;border:1px solid #ddd;vertical-align:top;}td:nth-child(1){text-align:center;}td:nth-child(2){white-space:nowrap;min-width:160px;}.fc{text-align:center;min-width:64px;}.pres{color:#1a6b3a;font-weight:700;}.aus{color:#e8000d;font-weight:700;}.tard{color:#e67e22;font-weight:700;}.just{color:#1a5276;font-weight:700;}.justif-sub{font-size:9px;color:#555;margin-top:2px;}@media print{body{margin:6px;}}</style></head><body><h1>\u{1F4DA} C.D. Matadorcita J.A.V.I. — Reporte de Asistencia</h1>`;
   for(const key of claves){const g=grupos[key];const ids=new Set(g.estudiantes.map(e=>e.id));const asistGrupo=asistencias.filter(a=>ids.has(a.estudianteId));const fechasMostrar=sortFechas([...new Set(asistGrupo.map(a=>a.fecha))]);html+=`<h3>\u{1F4CB} ${g.grado} — Sección ${g.seccion}</h3><table><thead><tr><th>#</th><th>Apellidos y Nombres</th>`;fechasMostrar.forEach(f=>{html+=`<th class="fc">${fmtCorta(f)}</th>`;});html+=`<th>Justificaciones</th></tr></thead><tbody>`;g.estudiantes.sort((a,b)=>a.nombre.localeCompare(b.nombre)).forEach((e,i)=>{html+=`<tr><td>${i+1}</td><td>${e.nombre}</td>`;const justsTexto=[];fechasMostrar.forEach(f=>{const r=asistencias.find(a=>a.estudianteId===e.id&&a.fecha===f);const est=r?.estado;const cls=est==='puntual'?'pres':est==='tardanza'?'tard':est==='ausente'?'aus':est==='justificado'?'just':'';const lbl=est==='puntual'?'OK':est==='tardanza'?'Tardanza':est==='ausente'?'Ausente':est==='justificado'?'Justif.':'-';const jst=justifs.find(j=>j.estudianteId===e.id&&j.fecha===f);if(jst) justsTexto.push(`${fmtCorta(f)}: ${jst.motivo}`);html+=`<td class="fc ${cls}">${lbl}</td>`;});html+=`<td>${justsTexto.length?justsTexto.join('<br>'):'-'}</td></tr>`;});html+=`</tbody></table>`;}
   html+=`</body></html>`;
   const w=window.open('','_blank');
@@ -2998,7 +3043,7 @@ async function exportarPDF() {
   const grupos={};
   for(const e of estudiantes){const key=e.grado+'|'+e.seccion;if(!grupos[key]) grupos[key]={grado:e.grado,seccion:e.seccion,estudiantes:[]};grupos[key].estudiantes.push(e);}
   const claves=Object.keys(grupos).sort((a,b)=>{const [ga,sa]=a.split('|'),[gb,sb]=b.split('|');return (gradoOrden.indexOf(ga)-gradoOrden.indexOf(gb))||secOrden.indexOf(sa)-secOrden.indexOf(sb);});
-  let html=`<html><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;font-size:11px;margin:16px;}h1{font-size:15px;color:#b00008;}h3{font-size:13px;color:#b00008;margin:22px 0 6px;border-bottom:2px solid #e8000d;padding-bottom:4px;}table{border-collapse:collapse;margin-bottom:16px;font-size:10px;}th{background:#b00008;color:white;padding:6px 8px;text-align:center;white-space:nowrap;border:1px solid #900;}td{padding:5px 8px;border:1px solid #ddd;vertical-align:top;}td:nth-child(1){text-align:center;}td:nth-child(2){white-space:nowrap;min-width:160px;}.fc{text-align:center;min-width:64px;}.pres{color:#1a6b3a;font-weight:700;}.aus{color:#e8000d;font-weight:700;}.tard{color:#e67e22;font-weight:700;}.just{color:#1a5276;font-weight:700;}@media print{body{margin:6px;}}</style></head><body><h1>\u{1F4DA} IE N.° 0148 — Reporte de Asistencia</h1>`;
+  let html=`<html><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;font-size:11px;margin:16px;}h1{font-size:15px;color:#b00008;}h3{font-size:13px;color:#b00008;margin:22px 0 6px;border-bottom:2px solid #e8000d;padding-bottom:4px;}table{border-collapse:collapse;margin-bottom:16px;font-size:10px;}th{background:#b00008;color:white;padding:6px 8px;text-align:center;white-space:nowrap;border:1px solid #900;}td{padding:5px 8px;border:1px solid #ddd;vertical-align:top;}td:nth-child(1){text-align:center;}td:nth-child(2){white-space:nowrap;min-width:160px;}.fc{text-align:center;min-width:64px;}.pres{color:#1a6b3a;font-weight:700;}.aus{color:#e8000d;font-weight:700;}.tard{color:#e67e22;font-weight:700;}.just{color:#1a5276;font-weight:700;}@media print{body{margin:6px;}}</style></head><body><h1>\u{1F4DA} C.D. Matadorcita J.A.V.I. — Reporte de Asistencia</h1>`;
   for(const key of claves){const g=grupos[key];const ids=new Set(g.estudiantes.map(e=>e.id));const asistGrupo=asistencias.filter(a=>ids.has(a.estudianteId));const fechasMostrar=sortFechas([...new Set(asistGrupo.map(a=>a.fecha))]);html+=`<h3>\u{1F4CB} ${g.grado} — Sección ${g.seccion}</h3><table><thead><tr><th>#</th><th>Apellidos y Nombres</th>`;fechasMostrar.forEach(f=>{html+=`<th class="fc">${fmtCorta(f)}</th>`;});html+=`<th>Justificaciones</th></tr></thead><tbody>`;g.estudiantes.sort((a,b)=>a.nombre.localeCompare(b.nombre)).forEach((e,i)=>{html+=`<tr><td>${i+1}</td><td>${e.nombre}</td>`;const justsTexto=[];fechasMostrar.forEach(f=>{const r=asistencias.find(a=>a.estudianteId===e.id&&a.fecha===f);const est=r?.estado;const cls=est==='puntual'?'pres':est==='tardanza'?'tard':est==='ausente'?'aus':est==='justificado'?'just':'';const lbl=est==='puntual'?'OK':est==='tardanza'?'Tardanza':est==='ausente'?'Ausente':est==='justificado'?'Justif.':'-';const jst=justifs.find(j=>j.estudianteId===e.id&&j.fecha===f);if(jst) justsTexto.push(`${fmtCorta(f)}: ${jst.motivo}`);html+=`<td class="fc ${cls}">${lbl}</td>`;});html+=`<td>${justsTexto.length?justsTexto.join('<br>'):'-'}</td></tr>`;});html+=`</tbody></table>`;}
   html+=`</body></html>`;
   const w=window.open('','_blank');
@@ -3070,7 +3115,7 @@ function reporteIndividual(estudianteId) {
     th { background: #b00008; color: white; padding: 6px 8px; text-align: left; border: 1px solid #900; }
     @media print { body { margin: 8px; } button { display: none; } }
   </style></head><body>
-  <h1>📋 IE N.° 0148 — Maestro Víctor Raúl Haya de la Torre</h1>
+  <h1>📋 C.D. Matadorcita J.A.V.I. — IEE Josefina M. de Bocanegra</h1>
   <div class="sub">Reporte Individual de Asistencia &nbsp;·&nbsp; Período: ${fmtPE(fi)} al ${fmtPE(ff)}</div>
 
   <div class="datos">
@@ -3093,7 +3138,7 @@ function reporteIndividual(estudianteId) {
   </table>
 
   <div style="margin-top:18px;font-size:10px;color:#888;border-top:1px solid #ddd;padding-top:8px;">
-    Generado el ${new Date().toLocaleDateString('es-PE')} a las ${new Date().toLocaleTimeString('es-PE')} &nbsp;·&nbsp; Sistema de Asistencia QR — IE N.° 0148
+    Generado el ${new Date().toLocaleDateString('es-PE')} a las ${new Date().toLocaleTimeString('es-PE')} &nbsp;·&nbsp; Sistema de Asistencia QR — C.D. Matadorcita J.A.V.I.
   </div>
   </body></html>`;
 
@@ -4145,7 +4190,20 @@ function importDescargarPlantilla() {
   ]);
   // Ancho de columnas
   ws['!cols'] = [{ wch: 35 }, { wch: 15 }, { wch: 15 }];
+
+  // Hoja de categorías de referencia
+  const wsCat = XLSX.utils.aoa_to_sheet([
+    ['Categorías disponibles'],
+    ['Nivel Básico'],
+    ['Nivel Intermedio'],
+    ['Nivel Avanzado 1'],
+    ['Nivel Avanzado 2'],
+    ['Nivel Competitivo'],
+  ]);
+  wsCat['!cols'] = [{ wch: 25 }];
+
   XLSX.utils.book_append_sheet(wb, ws, 'Estudiantes');
+  XLSX.utils.book_append_sheet(wb, wsCat, 'Categorías');
   XLSX.writeFile(wb, 'plantilla_estudiantes.xlsx');
 }
 
@@ -4156,6 +4214,7 @@ async function importProcesar() {
   const progreso = document.getElementById('importProgreso');
   if (!grado) { notif('⚠️ Selecciona el grado','warning'); return; }
   if (!seccion) { notif('⚠️ Selecciona la sección','warning'); return; }
+  const categoria = document.getElementById('importCategoria').value;
   if (!fileInput.files.length) { notif('⚠️ Selecciona un archivo Excel o CSV','warning'); return; }
   const file = fileInput.files[0];
   progreso.style.display = 'block';
@@ -4180,7 +4239,7 @@ async function importProcesar() {
           FB.where('seccion','==',seccion)
         );
         if (existe.length) { duplicados++; continue; }
-        await fsAdd('estudiantes', { nombre, grado, seccion, dniPadre, telefono });
+        await fsAdd('estudiantes', { nombre, grado, seccion, categoria, dniPadre, telefono });
         ok++;
       } catch(e) { errores++; }
       progreso.innerHTML = `<div style="font-size:13px;color:var(--texto-suave);">⏳ Importando ${i+1} de ${rows.length}...</div>`;
