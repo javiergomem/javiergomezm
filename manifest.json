@@ -1,0 +1,20 @@
+{
+  "name": "AsistenciaQR - C.D. Matadorcita J.A.V.I.",
+  "short_name": "AsistenciaQR",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#e8000d",
+  "icons": [
+    {
+      "src": "logo.jpeg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "logo.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
