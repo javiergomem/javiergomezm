@@ -513,18 +513,6 @@ tr.row-alerta{background:#ffe8e8;border-left:3px solid var(--rojo);}
 
       <!-- ══ PANEL ADMIN ══ -->
       <div id="panel_admin" class="hide">
-        <!-- FIX-SEC-10: Aviso de configuración pendiente para el administrador -->
-        <div id="avisoSeguridad" class="info-box alert" style="margin-bottom:16px;background:#ffe8e8;border:2px solid #e8000d;border-radius:10px;padding:14px 18px;">
-          <strong style="color:#b00008;">🔐 Configuración de seguridad requerida</strong><br>
-          <span style="font-size:12px;color:#7a4f4f;">
-            Para proteger los datos del sistema, realiza estas acciones en
-            <a href="https://console.firebase.google.com" target="_blank" style="color:#e8000d;">Firebase Console</a>:
-            <br>① Configura las <strong>Firestore Security Rules</strong> (ver comentario en el código fuente).
-            <br>② Crea el índice <strong>estudiantes → dniPadre</strong> en Firestore → Indexes.
-            <br>③ Activa el plan <strong>Blaze</strong> si tienes más de 800 estudiantes activos.
-          </span>
-          <button onclick="document.getElementById('avisoSeguridad').style.display='none'" style="float:right;background:none;border:none;font-size:16px;cursor:pointer;color:#b00008;margin-top:-28px;">✕</button>
-        </div>
         <div class="stats-row" id="statsRow">
           <div class="stat-box"><div class="stat-num" id="statTotal">0</div><div class="stat-lbl">Estudiantes</div></div>
           <div class="stat-box"><div class="stat-num" id="statPresentes">—</div><div class="stat-lbl">Presentes hoy</div></div>
@@ -539,34 +527,6 @@ tr.row-alerta{background:#ffe8e8;border-left:3px solid var(--rojo);}
             <button class="btn btn-primary btn-sm" onclick="abrirModalUsuario()">➕ Nuevo Usuario</button>
           </div>
           <div id="listaUsuarios"></div>
-        </div>
-
-        <div class="card">
-          <div class="card-header"><span class="card-title">⚙️ Configuración de Campos</span></div>
-          <div style="display:flex;flex-direction:column;gap:14px;">
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-              <div>
-                <div style="font-size:13px;font-weight:700;">Usar campo Grado</div>
-                <div style="font-size:11px;color:var(--texto-suave);margin-top:2px;">Muestra el campo Grado en registro, edición y filtros.</div>
-              </div>
-              <label style="position:relative;display:inline-block;width:46px;height:26px;flex-shrink:0;">
-                <input type="checkbox" id="cfgUsarGrado" onchange="guardarConfig()" style="opacity:0;width:0;height:0;">
-                <span onclick="document.getElementById('cfgUsarGrado').click()" style="position:absolute;cursor:pointer;inset:0;background:#ccc;border-radius:26px;transition:.3s;" id="cfgUsarGradoTrack"></span>
-                <span id="cfgUsarGradoKnob" style="position:absolute;content:'';height:20px;width:20px;left:3px;top:3px;background:white;border-radius:50%;transition:.3s;pointer-events:none;"></span>
-              </label>
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-              <div>
-                <div style="font-size:13px;font-weight:700;">Usar campo Sección</div>
-                <div style="font-size:11px;color:var(--texto-suave);margin-top:2px;">Muestra el campo Sección en registro, edición y filtros.</div>
-              </div>
-              <label style="position:relative;display:inline-block;width:46px;height:26px;flex-shrink:0;">
-                <input type="checkbox" id="cfgUsarSeccion" onchange="guardarConfig()" style="opacity:0;width:0;height:0;">
-                <span onclick="document.getElementById('cfgUsarSeccion').click()" style="position:absolute;cursor:pointer;inset:0;background:#ccc;border-radius:26px;transition:.3s;" id="cfgUsarSeccionTrack"></span>
-                <span id="cfgUsarSeccionKnob" style="position:absolute;content:'';height:20px;width:20px;left:3px;top:3px;background:white;border-radius:50%;transition:.3s;pointer-events:none;"></span>
-              </label>
-            </div>
-          </div>
         </div>
 
         <div class="card">
