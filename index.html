@@ -1402,7 +1402,7 @@ let _reporteJustifs = [];
 let _justificacionesCache = [];
 let _usuariosCache = [];
 let _padreUnsubscribes = []; // listeners tiempo real asistencia padre
-let _appConfig = { usarGrado: true, usarSeccion: true }; // config cargada desde Firestore
+let _appConfig = { usarGrado: false, usarSeccion: false }; // fijo: este colegio no usa grado/sección
 
 let _ignorarAuthChange = false;
 
@@ -1583,7 +1583,7 @@ function entrarApp() {
   document.getElementById('userHint').innerHTML = hints[sesion.rol] || '';
   actualizarFecha();
   if (sesion.rol !== 'padre') { actualizarStats(); renderAlertasBadge(); }
-  cargarConfig();
+  aplicarConfigCampos(); // aplica usarGrado/usarSeccion fijos (sin Firestore)
   if (sesion.rol === 'admin') irPanel('admin');
   else if (sesion.rol === 'padre') irPanel('padre');
   else if (sesion.rol === 'profesor') irPanel('refuerzo');
